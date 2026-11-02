@@ -28,7 +28,7 @@ exec qemu-system-x86_64 -m "${RAM:-3G}" -smp "${CPUS:-4}" "${accel[@]}" \
   -kernel "$OUT_DIR/bzImage" \
   -append "root=/dev/vda rw console=tty1 console=ttyS0 quiet loglevel=3" \
   -drive file="$OUT_DIR/sockos-desktop.img",format=raw,if=virtio \
-  -device virtio-vga,xres=1280,yres=800 \
+  -device virtio-vga,xres=1920,yres=1080 \
   -device virtio-keyboard-pci -device virtio-tablet-pci \
   -netdev user,id=n0 -device virtio-net-pci,netdev=n0 \
   "${audio[@]}" -device intel-hda -device hda-duplex,audiodev=snd0 \

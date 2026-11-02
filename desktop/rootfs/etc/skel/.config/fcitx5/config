@@ -1,0 +1,12 @@
+[Hotkey]
+EnumerateWithTriggerKeys=True
+EnumerateSkipFirst=False
+
+[Hotkey/TriggerKeys]
+# 한/영 전환: 한/영 키, 오른쪽 Alt, Shift+Space
+0=Hangul
+1=Alt_R
+2=Shift+space
+
+[Behavior]
+ShareInputState=All

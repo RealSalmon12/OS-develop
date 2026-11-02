@@ -63,6 +63,8 @@ chroot "$root" /bin/bash -e <<'IN'
 sed -i 's/^# *ko_KR.UTF-8/ko_KR.UTF-8/; s/^# *en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
 locale-gen >/dev/null
 echo 'LANG=ko_KR.UTF-8' > /etc/default/locale
+ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+echo Asia/Seoul > /etc/timezone
 id sock >/dev/null 2>&1 || useradd -m -s /bin/bash -G sudo,video,input,render sock
 passwd -d sock >/dev/null
 echo 'sock ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sock

@@ -1,0 +1,5 @@
+# SockOS 데스크톱이 켜질 때 함께 실행되는 것들
+swaybg -i /usr/share/sockos/wallpaper.png -m fill >/dev/null 2>&1 &
+waybar >/dev/null 2>&1 &
+mako >/dev/null 2>&1 &
+fcitx5 -d --replace >/dev/null 2>&1 &
