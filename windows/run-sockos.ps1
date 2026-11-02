@@ -13,6 +13,8 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $dir  = $PSScriptRoot
+# QEMU에 한글이 들어간 경로(예: C:\Users\홍길동)를 넘기지 않도록 폴더로 이동해서 파일 이름만 넘깁니다.
+Set-Location -LiteralPath $dir
 $qemu = "C:\Program Files\qemu\qemu-system-x86_64.exe"
 
 if (-not (Test-Path $qemu)) {
@@ -37,9 +39,9 @@ $common = @(
   "-accel", "whpx,kernel-irqchip=off", "-accel", "tcg",
   "-machine", "q35", "-m", $Memory, "-smp", $Cpus,
   "-cpu", "qemu64,+ssse3,+sse4.1,+sse4.2,+popcnt",
-  "-kernel", "$dir\bzImage",
+  "-kernel", "bzImage",
   "-append", "root=/dev/vda rw console=tty1 quiet loglevel=3",
-  "-drive", "file=$dir\sockos-desktop.qcow2,format=qcow2,if=virtio",
+  "-drive", "file=sockos-desktop.qcow2,format=qcow2,if=virtio",
   "-device", "virtio-keyboard-pci", "-device", "virtio-tablet-pci",
   "-netdev", "user,id=n0", "-device", "virtio-net-pci,netdev=n0",
   "-audiodev", "dsound,id=snd0", "-device", "intel-hda", "-device", "hda-duplex,audiodev=snd0"
