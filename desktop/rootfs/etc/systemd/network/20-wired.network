@@ -1,0 +1,6 @@
+# 유선 네트워크는 DHCP로 자동 연결합니다.
+[Match]
+Name=en* eth*
+
+[Network]
+DHCP=yes
