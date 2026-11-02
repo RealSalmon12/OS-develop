@@ -8,7 +8,8 @@
 
 - [x] 1단계: 저장소와 빌드 스크립트
 - [x] 2단계: 리눅스 커널 + BusyBox로 부팅, OS 이름과 환영 화면, 셸, 네트워크(DHCP)
-- [x] 3단계: 그래픽 데스크톱과 인터넷 (Wayland 데스크톱, 자동 로그인, DHCP, 한글 글꼴, 브라우저)
+- [x] 3단계: 그래픽 데스크톱과 인터넷
+- [x] 3.5단계: 작업 표시줄 데스크톱, 한글 입력, 기본 앱, 구글 검색
 - [x] 4단계: 소리(PipeWire)와 영상 재생, 패널의 유튜브 바로가기
 
 ## 필요한 것 (Ubuntu / Debian 기준)
@@ -38,17 +39,26 @@ sudo make desktop      # 데스크톱 디스크 이미지 out/sockos-desktop.img
 make run-desktop       # QEMU 창으로 실행
 ```
 
-![브라우저로 인터넷 접속](docs/browser.png)
+부팅하면 `sock` 사용자로 자동 로그인되고 SockOS 데스크톱이 떠요.
 
-부팅하면 `sock` 사용자로 자동 로그인되고 SockOS 데스크톱이 떠요. 위쪽 패널의 아이콘으로 터미널, 브라우저(Falkon), 유튜브를 열 수 있어요. 소리는 PipeWire로 나오고, QEMU의 가상 사운드 카드를 거쳐 내 컴퓨터 스피커로 나와요. 소리 출력 방식은 `AUDIO=pipewire make run-desktop`처럼 바꿀 수 있어요.
+- 아래쪽 작업 표시줄: **SockOS** 버튼(또는 Windows 키)으로 앱 메뉴, 열린 창 목록, 네트워크, 볼륨(클릭하면 소리 설정), 시계, **전원** 버튼
+- 바탕화면 오른쪽 클릭: 빠른 메뉴
+- **한글 입력**: 한/영 키, 오른쪽 Alt, Shift+Space 중 아무거나로 전환
+- 브라우저(Falkon): 시작 페이지와 기본 검색이 Google, 다운로드는 `Downloads` 폴더에 바로 저장
+- 기본 앱: 파일 관리자(Windows+E), 터미널(Windows+Enter), 메모장, 사진 보기, PDF 보기
+- 화면 캡처: PrintScreen 키 → `Pictures` 폴더
 
-![브라우저 영상 재생](docs/video.png)
+![한글 입력](docs/korean-input.png)
+![파일 관리자](docs/files.png) 소리는 PipeWire로 나오고, QEMU의 가상 사운드 카드를 거쳐 내 컴퓨터 스피커로 나와요. 소리 출력 방식은 `AUDIO=pipewire make run-desktop`처럼 바꿀 수 있어요.
 
 KVM이 없는 환경(가상머신 안의 가상머신 등)에서는 많이 느려서 유튜브가 끊길 수 있어요. 리눅스 PC에서 KVM이 켜져 있으면 자동으로 빨라져요.
 
 브라우저처럼 큰 프로그램은 라이브러리가 수백 개 필요해서, 데스크톱 버전의 프로그램들은 Ubuntu 패키지 저장소에서 가져와요. 커널, 부팅, 화면 구성, 브랜딩은 SockOS 것이에요. 넣을 프로그램은 `desktop/packages.txt`, 설정 파일은 `desktop/rootfs/`에서 바꿀 수 있어요.
 
-- 바탕화면과 패널: `desktop/rootfs/etc/xdg/weston/weston.ini`, `desktop/rootfs/usr/share/sockos/`
+- 창 관리와 단축키: `desktop/rootfs/etc/xdg/labwc/`
+- 작업 표시줄 디자인: `desktop/rootfs/etc/xdg/waybar/`
+- 앱 메뉴 디자인: `desktop/rootfs/etc/xdg/fuzzel/fuzzel.ini`
+- 바탕화면 그림: `desktop/rootfs/usr/share/sockos/wallpaper.png`
 - 세션 시작 스크립트: `desktop/rootfs/usr/local/bin/sockos-session`
 
 ## Windows에서 빠르게 실행하기 (WHPX 가속)
@@ -63,6 +73,8 @@ WSL 안에서는 CPU 가속(KVM)이 안 되는 PC가 있어요. 그럴 땐 QEMU�
    그리고 재부팅
 2. Ubuntu(WSL)에서: `cd ~/OS-develop && make export-windows`
 3. PowerShell에서: `powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\SockOS\run-sockos.ps1`
+
+노트북이 뜨거워지거나 갑자기 꺼지면 충전기를 꽂고 가볍게 실행하세요: `... run-sockos.ps1 -Cpus 2 -Width 1280 -Height 720`
 
 ## 내 마음대로 바꾸기
 

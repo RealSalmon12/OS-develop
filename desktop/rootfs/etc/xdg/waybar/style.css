@@ -1,0 +1,41 @@
+/* SockOS 작업 표시줄 디자인 */
+* {
+  font-family: "Noto Sans CJK KR", sans-serif;
+  font-size: 14px;
+  border: none;
+  min-height: 0;
+}
+window#waybar {
+  background: rgba(24, 16, 42, 0.88);
+  border-radius: 14px;
+  color: #f0e8ff;
+}
+#custom-start {
+  background: #7c5cd6;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  margin: 6px 0 6px 6px;
+  padding: 0 12px;
+}
+#custom-start:hover { background: #9576ea; }
+#taskbar button {
+  color: #d8ccf5;
+  padding: 0 10px;
+  margin: 6px 2px;
+  border-radius: 8px;
+}
+#taskbar button.active { background: rgba(124, 92, 214, 0.45); color: white; }
+#taskbar button:hover { background: rgba(255, 255, 255, 0.10); }
+#network, #pulseaudio, #clock, #tray, #custom-power {
+  padding: 0 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+}
+#clock { font-weight: bold; }
+#custom-power {
+  color: #ff8fa3;
+  margin-right: 6px;
+  font-size: 16px;
+}
+#pulseaudio:hover, #clock:hover, #custom-power:hover { background: rgba(255, 255, 255, 0.10); }

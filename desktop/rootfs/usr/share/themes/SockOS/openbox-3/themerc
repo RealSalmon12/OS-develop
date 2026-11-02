@@ -1,0 +1,19 @@
+# SockOS 창 테마
+border.width: 1
+padding.height: 6
+window.active.border.color: #7c5cd6
+window.inactive.border.color: #2a2140
+window.active.title.bg.color: #2a1d4a
+window.inactive.title.bg.color: #1c1530
+window.active.label.text.color: #f0e8ff
+window.inactive.label.text.color: #9a8fb8
+window.active.button.unpressed.image.color: #f0e8ff
+window.inactive.button.unpressed.image.color: #9a8fb8
+menu.items.bg.color: #1f1733
+menu.items.text.color: #f0e8ff
+menu.items.active.bg.color: #7c5cd6
+menu.items.active.text.color: #ffffff
+menu.overlap.x: 0
+osd.bg.color: #1f1733
+osd.border.color: #7c5cd6
+osd.label.text.color: #f0e8ff

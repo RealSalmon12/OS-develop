@@ -1,0 +1,46 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "height": 44,
+  "margin": "0 8 6 8",
+  "spacing": 6,
+  "modules-left": ["custom/start", "wlr/taskbar"],
+  "modules-center": [],
+  "modules-right": ["tray", "network", "pulseaudio", "clock", "custom/power"],
+  "custom/start": {
+    "format": "🧦 SockOS",
+    "tooltip-format": "앱 메뉴 (Windows 키)",
+    "on-click": "fuzzel"
+  },
+  "wlr/taskbar": {
+    "format": "{icon} {title:.18}",
+    "icon-size": 20,
+    "icon-theme": "Papirus-Dark",
+    "on-click": "activate",
+    "on-click-middle": "close"
+  },
+  "network": {
+    "format-ethernet": "🌐 연결됨",
+    "format-wifi": "📶 {essid}",
+    "format-disconnected": "⚠ 인터넷 없음",
+    "tooltip-format": "{ifname} {ipaddr}"
+  },
+  "pulseaudio": {
+    "format": "🔊 {volume}%",
+    "format-muted": "🔇 음소거",
+    "on-click": "pavucontrol-qt",
+    "scroll-step": 5
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%Y년 %m월 %d일 %A}",
+    "tooltip-format": "{:%Y년 %m월 %d일 %A}",
+    "locale": "ko_KR.UTF-8"
+  },
+  "tray": { "icon-size": 18, "spacing": 8 },
+  "custom/power": {
+    "format": "전원",
+    "tooltip-format": "전원",
+    "on-click": "sockos-power"
+  }
+}

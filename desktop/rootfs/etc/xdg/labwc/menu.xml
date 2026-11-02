@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 바탕화면 오른쪽 클릭 메뉴 -->
+<openbox_menu>
+  <menu id="root-menu" label="SockOS">
+    <item label="앱 메뉴"><action name="Execute" command="fuzzel" /></item>
+    <item label="브라우저"><action name="Execute" command="falkon" /></item>
+    <item label="파일"><action name="Execute" command="pcmanfm-qt" /></item>
+    <item label="터미널"><action name="Execute" command="foot" /></item>
+    <separator />
+    <item label="전원"><action name="Execute" command="sockos-power" /></item>
+  </menu>
+</openbox_menu>

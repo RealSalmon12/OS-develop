@@ -15,15 +15,45 @@ ca-certificates
 curl
 less
 nano
-# 그래픽: Wayland 컴포지터 + 소프트웨어/가상 GPU 드라이버
-weston
+# 그래픽: Wayland 컴포지터(labwc) + 작업 표시줄(waybar) + 앱 메뉴(fuzzel)
+labwc
 seatd
+waybar
+fuzzel
+swaybg
+mako-notifier
+wlr-randr
+grim
+papirus-icon-theme
+adwaita-icon-theme
+xdg-user-dirs
+xdg-utils
+# 기본 앱: 터미널, 파일 관리자, 메모장, 사진/PDF 보기, 소리 설정
+foot
+pcmanfm-qt
+featherpad
+lximage-qt
+qpdfview
+pavucontrol-qt
+lxqt-qtplugin
+pcmanfm-qt-l10n
+lximage-qt-l10n
+featherpad-l10n
+qpdfview-translations
+# 한글 입력
+fcitx5
+fcitx5-hangul
+fcitx5-frontend-qt5
+fcitx5-frontend-gtk3
+fcitx5-config-qt
 libgl1-mesa-dri
 libegl1
 libgles2
 # 글꼴 (한글 포함)
 fonts-noto-cjk
 fonts-dejavu-core
+fonts-noto-color-emoji
+tzdata
 # 브라우저: Falkon (크롬과 같은 Chromium 엔진 사용)
 falkon
 qtwayland5

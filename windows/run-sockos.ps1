@@ -1,7 +1,14 @@
 # SockOS를 Windows에서 직접 QEMU + WHPX 가속으로 실행합니다.
 # 사용법 (PowerShell):  powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\SockOS\run-sockos.ps1
+# 가볍게 실행:          ... run-sockos.ps1 -Cpus 2 -Width 1280 -Height 720
 # 준비물: QEMU for Windows, "Windows 하이퍼바이저 플랫폼" 기능 (README의 Windows 실행 참고)
 
+param(
+  [int]$Cpus = 4,          # 노트북이 뜨거워지면 2로 줄여보세요
+  [string]$Memory = "4G",
+  [int]$Width = 1920,      # 무거우면 1280
+  [int]$Height = 1080      # 무거우면 720
+)
 $ErrorActionPreference = "Stop"
 $dir  = $PSScriptRoot
 $qemu = "C:\Program Files\qemu\qemu-system-x86_64.exe"
@@ -26,12 +33,12 @@ if ($hv -ne 1) {
 
 & $qemu `
   -accel whpx,kernel-irqchip=off -accel tcg `
-  -machine q35 -m 3G -smp 4 `
+  -machine q35 -m $Memory -smp $Cpus `
   -cpu qemu64,+ssse3,+sse4.1,+sse4.2,+popcnt `
   -kernel "$dir\bzImage" `
   -append "root=/dev/vda rw console=tty1 quiet loglevel=3" `
   -drive "file=$dir\sockos-desktop.qcow2,format=qcow2,if=virtio" `
-  -device virtio-vga,xres=1280,yres=800 `
+  -device "virtio-vga,xres=$Width,yres=$Height" `
   -device virtio-keyboard-pci -device virtio-tablet-pci `
   -netdev user,id=n0 -device virtio-net-pci,netdev=n0 `
   -audiodev dsound,id=snd0 -device intel-hda -device hda-duplex,audiodev=snd0 `

@@ -1,0 +1,8 @@
+#!/bin/sh
+# 전원 메뉴
+choice=$(printf '로그아웃\n다시 시작\n전원 끄기\n' | fuzzel --dmenu --prompt "⏻ " --lines 3 --anchor center --y-margin 0)
+case "$choice" in
+  "다시 시작") systemctl reboot ;;
+  "전원 끄기") systemctl poweroff ;;
+  "로그아웃") labwc --exit ;;
+esac
