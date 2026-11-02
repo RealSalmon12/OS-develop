@@ -1,0 +1,5 @@
+#!/bin/sh
+cat /etc/motd
+cd /root
+export HOME=/root USER=root
+exec /bin/sh -l

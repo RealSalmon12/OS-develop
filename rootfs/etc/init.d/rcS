@@ -1,0 +1,13 @@
+#!/bin/sh
+. /etc/os-release
+hostname -F /etc/hostname
+echo
+echo "  >> $PRETTY_NAME 부팅 중..."
+ip link set lo up
+for dev in /sys/class/net/*; do
+  name=$(basename "$dev")
+  [ "$name" = lo ] && continue
+  ip link set "$name" up
+  udhcpc -i "$name" -q -n -t 5 -s /usr/share/udhcpc/default.script >/dev/null 2>&1 \
+    && echo "  >> 네트워크 연결됨: $name ($(ip -4 -o addr show "$name" | awk '{print $4}'))"
+done
