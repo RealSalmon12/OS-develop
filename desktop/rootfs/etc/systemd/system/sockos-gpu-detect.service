@@ -1,0 +1,10 @@
+[Unit]
+Description=SockOS: detect 3D graphics acceleration (virgl)
+Before=getty@tty1.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'dmesg | grep -q "features: +virgl" && touch /run/sockos-gpu || true'
+
+[Install]
+WantedBy=multi-user.target

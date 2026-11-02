@@ -1,7 +1,6 @@
 # SockOS 앱 환경 변수
 QT_QPA_PLATFORM=wayland
 QT_QPA_PLATFORMTHEME=lxqt
-QTWEBENGINE_CHROMIUM_FLAGS=--disable-gpu
 QT_IM_MODULE=fcitx
 GTK_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
