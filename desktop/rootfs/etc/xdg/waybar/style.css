@@ -19,6 +19,16 @@ window#waybar {
   padding: 0 12px;
 }
 #custom-start:hover { background: #9576ea; }
+/* 고정 아이콘: 인터넷, 유튜브, 파일 */
+#custom-web, #custom-youtube, #custom-files {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f0e8ff;
+  border-radius: 10px;
+  margin: 6px 0;
+  padding: 0 12px;
+}
+#custom-youtube { color: #ff9a9a; }
+#custom-web:hover, #custom-youtube:hover, #custom-files:hover { background: rgba(124, 92, 214, 0.55); }
 #taskbar button {
   color: #d8ccf5;
   padding: 0 10px;
