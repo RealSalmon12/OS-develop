@@ -4,5 +4,16 @@ export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=SockOS:wlroots
 export LIBSEAT_BACKEND=seatd
 export LANG=ko_KR.UTF-8
+
+if [ -e /run/sockos-gpu ]; then
+  # 그래픽 가속(virgl)이 있으면 화면과 브라우저 모두 GPU로 그립니다.
+  export QTWEBENGINE_CHROMIUM_FLAGS="--ignore-gpu-blocklist"
+else
+  # 가속이 없으면 CPU를 가장 적게 쓰는 방식으로 그립니다.
+  export WLR_RENDERER=pixman
+  export QTWEBENGINE_CHROMIUM_FLAGS="--disable-gpu"
+  export LIBGL_ALWAYS_SOFTWARE=1
+fi
+
 xdg-user-dirs-update >/dev/null 2>&1
 exec labwc >"$HOME/.sockos-session.log" 2>&1

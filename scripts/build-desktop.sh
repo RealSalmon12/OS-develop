@@ -70,7 +70,7 @@ passwd -d sock >/dev/null
 echo 'sock ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sock
 chmod 440 /etc/sudoers.d/sock
 cp -a /etc/skel/. /home/sock/ && chown -R sock:sock /home/sock
-systemctl enable systemd-networkd systemd-resolved seatd >/dev/null 2>&1
+systemctl enable systemd-networkd systemd-resolved seatd sockos-gpu-detect >/dev/null 2>&1
 # Ubuntu 안내 문구 대신 SockOS 화면이 바로 보이게 합니다.
 rm -f /etc/update-motd.d/* /etc/legal /etc/motd
 systemctl mask systemd-networkd-wait-online.service >/dev/null 2>&1
