@@ -4,3 +4,7 @@ text-color=#f0e8ff
 border-color=#7c5cd6
 border-radius=12
 default-timeout=5000
+border-size=2
+padding=12
+margin=12
+width=380

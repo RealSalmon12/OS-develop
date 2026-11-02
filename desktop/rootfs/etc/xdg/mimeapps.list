@@ -1,0 +1,19 @@
+[Default Applications]
+text/html=sockos-browser.desktop
+application/xhtml+xml=sockos-browser.desktop
+x-scheme-handler/http=sockos-browser.desktop
+x-scheme-handler/https=sockos-browser.desktop
+application/pdf=qpdfview.desktop
+video/mp4=mpv.desktop
+video/webm=mpv.desktop
+video/x-matroska=mpv.desktop
+audio/mpeg=mpv.desktop
+image/png=lximage-qt.desktop
+image/jpeg=lximage-qt.desktop
+image/gif=lximage-qt.desktop
+image/webp=lximage-qt.desktop
+text/plain=featherpad.desktop
+application/zip=lxqt-archiver.desktop
+application/x-7z-compressed=lxqt-archiver.desktop
+application/x-tar=lxqt-archiver.desktop
+inode/directory=pcmanfm-qt.desktop

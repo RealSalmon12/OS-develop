@@ -6,7 +6,7 @@
   "spacing": 6,
   "modules-left": ["custom/start", "custom/web", "custom/youtube", "custom/files", "wlr/taskbar"],
   "modules-center": [],
-  "modules-right": ["tray", "network", "pulseaudio", "clock", "custom/power"],
+  "modules-right": ["custom/shot", "tray", "network", "pulseaudio", "clock", "custom/power"],
   "custom/start": {
     "format": "🧦 SockOS",
     "tooltip-format": "앱 메뉴",
@@ -15,12 +15,12 @@
   "custom/web": {
     "format": "🌐 인터넷",
     "tooltip": false,
-    "on-click": "falkon"
+    "on-click": "sockos-browser"
   },
   "custom/youtube": {
     "format": "▶ 유튜브",
     "tooltip": false,
-    "on-click": "falkon https://www.youtube.com"
+    "on-click": "sockos-browser https://www.youtube.com"
   },
   "custom/files": {
     "format": "📁 파일",
@@ -49,10 +49,20 @@
   "clock": {
     "format": "{:%H:%M}",
     "format-alt": "{:%Y년 %m월 %d일 %A}",
-    "tooltip-format": "{:%Y년 %m월 %d일 %A}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "format": { "today": "<span color='#b79cff'><b><u>{}</u></b></span>" }
+    },
     "locale": "ko_KR.UTF-8"
   },
   "tray": { "icon-size": 18, "spacing": 8 },
+  "custom/shot": {
+    "format": "📷 캡처",
+    "tooltip": false,
+    "on-click": "sockos-screenshot area",
+    "on-click-right": "sockos-screenshot"
+  },
   "custom/power": {
     "format": "전원",
     "tooltip-format": "전원",

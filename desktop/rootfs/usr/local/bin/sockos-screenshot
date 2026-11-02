@@ -1,0 +1,14 @@
+#!/bin/sh
+# 화면 캡처: 인자 없으면 전체 화면, "area"면 마우스로 고른 영역.
+# 사진 폴더에 저장하고 클립보드에도 복사합니다. (바로 붙여넣기 가능)
+dir=$(xdg-user-dir PICTURES 2>/dev/null); [ -n "$dir" ] && [ "$dir" != "$HOME" ] || dir="$HOME/Pictures"
+mkdir -p "$dir"
+file="$dir/스크린샷-$(date +%Y%m%d-%H%M%S).png"
+if [ "$1" = area ]; then
+  geom=$(slurp -d -b 00000066 -c b79cffff) || exit 0
+  grim -g "$geom" "$file" || exit 1
+else
+  grim "$file" || exit 1
+fi
+wl-copy --type image/png < "$file"
+notify-send -i camera-photo "화면 캡처" "사진 폴더에 저장하고 복사했어요. Ctrl+V로 붙여넣을 수 있어요."

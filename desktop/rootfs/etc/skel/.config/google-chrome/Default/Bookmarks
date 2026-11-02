@@ -1,0 +1,72 @@
+{
+  "roots": {
+    "bookmark_bar": {
+      "children": [
+        {
+          "date_added": "13370000000000000",
+          "id": "5",
+          "name": "Google",
+          "type": "url",
+          "url": "https://www.google.com/"
+        },
+        {
+          "date_added": "13370000000000000",
+          "id": "6",
+          "name": "YouTube",
+          "type": "url",
+          "url": "https://www.youtube.com/"
+        },
+        {
+          "date_added": "13370000000000000",
+          "id": "7",
+          "name": "네이버",
+          "type": "url",
+          "url": "https://www.naver.com/"
+        },
+        {
+          "date_added": "13370000000000000",
+          "id": "8",
+          "name": "Gmail",
+          "type": "url",
+          "url": "https://mail.google.com/"
+        },
+        {
+          "date_added": "13370000000000000",
+          "id": "9",
+          "name": "Google 번역",
+          "type": "url",
+          "url": "https://translate.google.com/?sl=auto&tl=ko"
+        },
+        {
+          "date_added": "13370000000000000",
+          "id": "10",
+          "name": "Google 지도",
+          "type": "url",
+          "url": "https://www.google.com/maps"
+        }
+      ],
+      "date_added": "13370000000000000",
+      "date_modified": "0",
+      "id": "1",
+      "name": "북마크바",
+      "type": "folder"
+    },
+    "other": {
+      "children": [],
+      "date_added": "13370000000000000",
+      "date_modified": "0",
+      "id": "2",
+      "name": "기타 북마크",
+      "type": "folder"
+    },
+    "synced": {
+      "children": [],
+      "date_added": "13370000000000000",
+      "date_modified": "0",
+      "id": "3",
+      "name": "모바일 북마크",
+      "type": "folder"
+    }
+  },
+  "version": 1
+}

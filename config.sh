@@ -10,6 +10,13 @@ BUSYBOX_VERSION="${BUSYBOX_VERSION:-1.36.1}"
 #   KERNEL_TARBALL=/path/to/linux-x.y.tar.xz   (다운로드 대신 사용)
 #   BUSYBOX_BIN=/path/to/static/busybox        (BusyBox 빌드 생략)
 
+# 데스크톱 브라우저: chrome = Google Chrome (기본), chromium = 오픈소스 Chromium
+# Chrome을 못 받으면 자동으로 Chromium을 넣습니다.
+# 상품으로 배포할 때는 Chrome을 다시 배포할 수 없으니 BROWSER=chromium 을 쓰세요.
+BROWSER="${BROWSER:-chrome}"
+#   CHROME_DEB=/path/to/google-chrome-stable_current_amd64.deb   (다운로드 대신 사용)
+#   CHROMIUM_ZIP=/path/to/chrome-linux.zip                      (다운로드 대신 사용)
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${BUILD_DIR:-$ROOT_DIR/build}"
 OUT_DIR="${OUT_DIR:-$ROOT_DIR/out}"

@@ -37,7 +37,7 @@ window#waybar {
 }
 #taskbar button.active { background: rgba(124, 92, 214, 0.45); color: white; }
 #taskbar button:hover { background: rgba(255, 255, 255, 0.10); }
-#network, #pulseaudio, #clock, #tray, #custom-power {
+#custom-shot, #network, #pulseaudio, #clock, #tray, #custom-power {
   padding: 0 10px;
   margin: 6px 0;
   border-radius: 8px;
@@ -48,4 +48,4 @@ window#waybar {
   margin-right: 6px;
   font-size: 16px;
 }
-#pulseaudio:hover, #clock:hover, #custom-power:hover { background: rgba(255, 255, 255, 0.10); }
+#custom-shot:hover, #pulseaudio:hover, #clock:hover, #custom-power:hover { background: rgba(255, 255, 255, 0.10); }

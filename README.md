@@ -41,13 +41,29 @@ make run-desktop       # QEMU 창으로 실행
 
 부팅하면 `sock` 사용자로 자동 로그인되고 SockOS 데스크톱이 떠요.
 
-- 아래쪽 작업 표시줄: **SockOS** 버튼(또는 Alt+F1)으로 앱 메뉴, 바로 가기 버튼(**인터넷**, **유튜브**, **파일**), 열린 창 목록, 네트워크, 볼륨(클릭하면 소리 설정), 시계, **전원** 버튼
-- Windows에서 QEMU로 실행하면 Windows 키는 바깥 Windows가 먼저 가져가요. 앱 메뉴는 SockOS 버튼이나 Alt+F1로 여세요.
+- 아래쪽 작업 표시줄: **SockOS** 버튼(또는 Alt+F1)으로 앱 메뉴, 바로 가기 버튼(**인터넷**, **유튜브**, **파일**), 열린 창 목록, **캡처** 버튼, 네트워크, 볼륨(클릭하면 소리 설정), 시계(마우스를 올리면 달력), **전원** 버튼
+- Windows에서 QEMU로 실행하면 Windows 키, Alt+Tab, Ctrl+Alt+Del 같은 키는 바깥 Windows가 먼저 가져가요. 그래서 Ctrl+Alt 단축키를 따로 만들어 뒀어요.
 - 바탕화면 오른쪽 클릭: 빠른 메뉴
 - **한글 입력**: 한/영 키, 오른쪽 Alt, Shift+Space 중 아무거나로 전환
-- 브라우저(Falkon): 시작 페이지와 기본 검색이 Google, 다운로드는 `Downloads` 폴더에 바로 저장
-- 기본 앱: 파일 관리자(Windows+E), 터미널(Windows+Enter), 메모장, 사진 보기, PDF 보기
-- 화면 캡처: PrintScreen 키 → `Pictures` 폴더
+- **브라우저: Google Chrome** (빌드할 때 받아서 설치하고, 못 받으면 오픈소스 Chromium을 넣어요)
+  - 시작 페이지 Google, 홈 버튼, 북마크바(Google, YouTube, 네이버, Gmail, 번역, 지도)
+  - 다운로드는 묻지 않고 `Downloads` 폴더에 바로 저장, 한국어 화면, 번역 켜짐, 크롬 안에서도 한글 입력
+  - 상품으로 배포할 때는 Chrome을 함께 배포할 수 없어요. `sudo BROWSER=chromium make desktop`으로 Chromium을 넣으세요.
+- 기본 앱: 파일, 터미널, 메모장, 사진 보기, PDF 보기, **계산기**, **압축 풀기**, **동영상 플레이어**, **작업 관리자**
+- 파일을 두 번 클릭하면 알맞은 앱으로 열려요 (동영상, 사진, zip, 텍스트, PDF)
+- 화면 캡처: **캡처** 버튼(마우스로 영역 선택, 오른쪽 클릭은 전체 화면) 또는 PrintScreen. `Pictures` 폴더에 저장되고 클립보드에도 복사돼요.
+- 창 정리: 창 제목을 화면 왼쪽/오른쪽 끝으로 끌면 반쪽, 위로 끌면 최대화
+
+| 단축키 | 기능 |
+|---|---|
+| Alt+F1 | 앱 메뉴 |
+| Ctrl+Alt+B | 인터넷(크롬) |
+| Ctrl+Alt+E | 파일 |
+| Ctrl+Alt+T | 터미널 |
+| Ctrl+Alt+Esc | 작업 관리자 |
+| Ctrl+Alt+S | 화면 영역 캡처 |
+| Ctrl+Alt+↑ / ← / → | 최대화 / 왼쪽 반 / 오른쪽 반 |
+| Alt+F4 | 창 닫기 |
 
 ![한글 입력](docs/korean-input.png)
 ![파일 관리자](docs/files.png) 소리는 PipeWire로 나오고, QEMU의 가상 사운드 카드를 거쳐 내 컴퓨터 스피커로 나와요. 소리 출력 방식은 `AUDIO=pipewire make run-desktop`처럼 바꿀 수 있어요.
