@@ -7,7 +7,7 @@ source "$(dirname "$0")/../config.sh"
 
 accel=()
 if [ -w /dev/kvm ]; then
-  accel=(-enable-kvm -cpu host)
+  accel=(-accel kvm -accel tcg -cpu max)  # KVM이 실제로 안 되면 느린 방식으로 자동 전환
 else
   echo "!! 경고: KVM 가속을 쓸 수 없어서 매우 느리게 실행돼요." >&2
   if [ -e /dev/kvm ]; then
