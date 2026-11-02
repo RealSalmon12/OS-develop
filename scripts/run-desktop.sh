@@ -9,7 +9,11 @@ accel=()
 [ -w /dev/kvm ] && accel=(-enable-kvm -cpu host)
 
 display=(-display gtk,zoom-to-fit=on)
-[ "${1:-}" = "--headless" ] && display=(-display none -vnc :1)
+audio=(-audiodev "${AUDIO:-pa}",id=snd0)   # 소리 출력 방식 (pa, pipewire, alsa ...)
+if [ "${1:-}" = "--headless" ]; then
+  display=(-display none -vnc :1)
+  audio=(-audiodev none,id=snd0)
+fi
 
 exec qemu-system-x86_64 -m "${RAM:-3G}" -smp "${CPUS:-4}" "${accel[@]}" \
   -kernel "$OUT_DIR/bzImage" \
@@ -18,4 +22,5 @@ exec qemu-system-x86_64 -m "${RAM:-3G}" -smp "${CPUS:-4}" "${accel[@]}" \
   -device virtio-vga,xres=1280,yres=800 \
   -device virtio-keyboard-pci -device virtio-tablet-pci \
   -netdev user,id=n0 -device virtio-net-pci,netdev=n0 \
+  "${audio[@]}" -device intel-hda -device hda-duplex,audiodev=snd0 \
   -serial mon:stdio "${display[@]}" "${@:2}"

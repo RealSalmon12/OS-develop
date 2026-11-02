@@ -5,6 +5,7 @@ systemd-sysv
 systemd-resolved
 udev
 dbus
+dbus-user-session
 libpam-systemd
 sudo
 locales
@@ -26,3 +27,12 @@ fonts-dejavu-core
 # 브라우저: Falkon (크롬과 같은 Chromium 엔진 사용)
 falkon
 qtwayland5
+# 소리: PipeWire (유튜브 소리 재생)
+pipewire
+pipewire-pulse
+pipewire-alsa
+wireplumber
+alsa-utils
+# 영상 재생에 쓰는 코덱 라이브러리
+libavcodec60
+gstreamer1.0-plugins-good
