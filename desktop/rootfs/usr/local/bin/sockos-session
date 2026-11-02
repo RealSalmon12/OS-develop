@@ -1,0 +1,8 @@
+#!/bin/sh
+# SockOS 데스크톱 세션 시작
+export XDG_SESSION_TYPE=wayland
+export LIBSEAT_BACKEND=seatd
+export QT_QPA_PLATFORM=wayland
+export QTWEBENGINE_CHROMIUM_FLAGS="--disable-gpu"
+export LANG=ko_KR.UTF-8
+exec weston --renderer=pixman >"$HOME/.weston.log" 2>&1
