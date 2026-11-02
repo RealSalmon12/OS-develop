@@ -51,6 +51,19 @@ KVM이 없는 환경(가상머신 안의 가상머신 등)에서는 많이 느�
 - 바탕화면과 패널: `desktop/rootfs/etc/xdg/weston/weston.ini`, `desktop/rootfs/usr/share/sockos/`
 - 세션 시작 스크립트: `desktop/rootfs/usr/local/bin/sockos-session`
 
+## Windows에서 빠르게 실행하기 (WHPX 가속)
+
+WSL 안에서는 CPU 가속(KVM)이 안 되는 PC가 있어요. 그럴 땐 QEMU를 Windows에서 직접 돌리면 빨라요.
+
+1. 관리자 PowerShell에서 한 번만:
+   ```
+   Enable-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform -All
+   winget install SoftwareFreedomConservancy.QEMU
+   ```
+   그리고 재부팅
+2. Ubuntu(WSL)에서: `cd ~/OS-develop && make export-windows`
+3. PowerShell에서: `powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\SockOS\run-sockos.ps1`
+
 ## 내 마음대로 바꾸기
 
 - OS 이름, 버전, 호스트 이름: `config.sh`

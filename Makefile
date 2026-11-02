@@ -1,7 +1,7 @@
 # make        커널, BusyBox, rootfs를 모두 빌드
 # make run    터미널에서 실행 / make gui  창으로 실행
 # sudo make desktop   그래픽 데스크톱 디스크 이미지 / make run-desktop  실행
-.PHONY: all kernel busybox rootfs run gui desktop run-desktop clean distclean
+.PHONY: all kernel busybox rootfs run gui desktop run-desktop export-windows clean distclean
 all: kernel rootfs
 
 kernel:
@@ -23,6 +23,8 @@ desktop:
 	./scripts/build-desktop.sh
 run-desktop:
 	./scripts/run-desktop.sh
+export-windows:
+	./scripts/export-windows.sh
 
 clean:
 	rm -rf out build/rootfs
