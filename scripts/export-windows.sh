@@ -4,9 +4,16 @@
 set -euo pipefail
 source "$(dirname "$0")/../config.sh"
 
-winprofile=$(cmd.exe /c "echo %USERPROFILE%" 2>/dev/null | tr -d '\r')
+# Windows 사용자 이름이 한글이어도 깨지지 않게 UTF-8(코드 페이지 65001)로 받아 옵니다.
+winprofile=$(cd /mnt/c 2>/dev/null; powershell.exe -NoProfile -Command \
+  '[Console]::OutputEncoding = [Text.Encoding]::UTF8; $env:USERPROFILE' 2>/dev/null | tr -d '\r' | tail -n 1) || true
+if [ -z "$winprofile" ] || [ ! -d "$(wslpath "$winprofile" 2>/dev/null)" ]; then
+  winprofile=$(cd /mnt/c 2>/dev/null; cmd.exe /c "chcp 65001 >nul & echo %USERPROFILE%" 2>/dev/null | tr -d '\r' | tail -n 1) || true
+fi
 [ -n "$winprofile" ] || { echo "WSL에서만 쓸 수 있어요 (Windows 사용자 폴더를 못 찾음)"; exit 1; }
-dest="$(wslpath "$winprofile")/SockOS"
+home_win="$(wslpath "$winprofile")"
+[ -d "$home_win" ] || { echo "Windows 사용자 폴더를 찾지 못했어요: $winprofile"; exit 1; }
+dest="$home_win/SockOS"
 mkdir -p "$dest"
 
 echo ">> 커널 복사"
