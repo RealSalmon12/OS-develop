@@ -19,10 +19,13 @@ else
 fi
 
 src="$BUILD_DIR/linux"
-if [ ! -f "$src/Makefile" ]; then
+# 커널 버전이 바뀌면 소스를 새로 풉니다.
+stamp="$src/.sockos-source"
+if [ ! -f "$src/Makefile" ] || [ "$(cat "$stamp" 2>/dev/null)" != "$(basename "$tarball")" ]; then
   echo ">> 커널 소스 풀기: $tarball"
   rm -rf "$src" && mkdir -p "$src"
   tar -xf "$tarball" -C "$src" --strip-components=1
+  basename "$tarball" > "$stamp"
 fi
 
 cd "$src"

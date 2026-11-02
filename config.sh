@@ -3,7 +3,8 @@ OS_NAME="${OS_NAME:-SockOS}"
 OS_VERSION="${OS_VERSION:-0.1}"
 OS_HOSTNAME="${OS_HOSTNAME:-sockos}"
 
-KERNEL_VERSION="${KERNEL_VERSION:-6.12.10}"
+# 6.12 LTS. 6.12.10 같은 초기 버전은 최신 컴파일러(GCC 15)에서 빌드가 안 돼요.
+KERNEL_VERSION="${KERNEL_VERSION:-6.12.40}"
 BUSYBOX_VERSION="${BUSYBOX_VERSION:-1.36.1}"
 
 # 이미 받아 둔 소스나 바이너리를 쓰고 싶으면 아래 환경 변수를 지정하세요.
