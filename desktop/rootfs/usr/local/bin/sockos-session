@@ -12,7 +12,9 @@ else
   # 가속이 없으면 CPU를 가장 적게 쓰는 방식으로 그립니다.
   export WLR_RENDERER=pixman
   export QTWEBENGINE_CHROMIUM_FLAGS="--disable-gpu"
-  export LIBGL_ALWAYS_SOFTWARE=1
+  # X11 프로그램(크롬)을 띄우는 XWayland도 GPU 없이 그리게 합니다.
+  # (LIBGL_ALWAYS_SOFTWARE를 켜면 XWayland가 시작하다 죽어서 쓰지 않습니다)
+  export XWAYLAND_NO_GLAMOR=1
 fi
 
 xdg-user-dirs-update >/dev/null 2>&1

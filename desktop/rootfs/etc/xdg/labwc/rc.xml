@@ -10,16 +10,30 @@
     <font place="MenuItem"><name>Noto Sans CJK KR</name><size>10</size></font>
   </theme>
   <placement><policy>center</policy></placement>
+  <!-- 창을 화면 왼쪽/오른쪽 끝으로 끌면 반쪽 크기, 위로 끌면 최대화 -->
+  <snapping><range>12</range><topMaximize>yes</topMaximize></snapping>
   <keyboard>
     <default />
     <!-- 앱 메뉴: Alt+F1 (Windows에서 실행하면 Windows 키는 바깥 Windows가 가져갑니다) -->
     <keybind key="A-F1"><action name="Execute" command="fuzzel" /></keybind>
     <keybind key="W-Return"><action name="Execute" command="foot" /></keybind>
     <keybind key="W-e"><action name="Execute" command="pcmanfm-qt" /></keybind>
-    <keybind key="W-b"><action name="Execute" command="falkon" /></keybind>
+    <keybind key="W-b"><action name="Execute" command="sockos-browser" /></keybind>
     <keybind key="A-F4"><action name="Close" /></keybind>
     <keybind key="W-Up"><action name="ToggleMaximize" /></keybind>
-    <keybind key="Print"><action name="Execute" command="sh -c 'grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png'" /></keybind>
+    <keybind key="W-Left"><action name="SnapToEdge" direction="left" /></keybind>
+    <keybind key="W-Right"><action name="SnapToEdge" direction="right" /></keybind>
+    <!-- Windows가 가로채지 않는 단축키 -->
+    <keybind key="C-A-t"><action name="Execute" command="foot" /></keybind>
+    <keybind key="C-A-e"><action name="Execute" command="pcmanfm-qt" /></keybind>
+    <keybind key="C-A-b"><action name="Execute" command="sockos-browser" /></keybind>
+    <keybind key="C-A-Escape"><action name="Execute" command="qps" /></keybind>
+    <keybind key="C-A-Up"><action name="ToggleMaximize" /></keybind>
+    <keybind key="C-A-Left"><action name="SnapToEdge" direction="left" /></keybind>
+    <keybind key="C-A-Right"><action name="SnapToEdge" direction="right" /></keybind>
+    <keybind key="C-A-s"><action name="Execute" command="sockos-screenshot area" /></keybind>
+    <keybind key="Print"><action name="Execute" command="sockos-screenshot" /></keybind>
+    <keybind key="S-Print"><action name="Execute" command="sockos-screenshot area" /></keybind>
   </keyboard>
   <mouse><default /></mouse>
 </labwc_config>

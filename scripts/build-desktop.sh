@@ -44,6 +44,50 @@ pkgs=$(grep -v '^\s*#' "$ROOT_DIR/desktop/packages.txt" | xargs)
 chroot "$root" env DEBIAN_FRONTEND=noninteractive apt-get update -qq
 chroot "$root" env DEBIAN_FRONTEND=noninteractive \
   apt-get install -y -qq --no-install-recommends $pkgs
+# 예전 버전에 있던 프로그램 정리 (Falkon → Chrome으로 바뀜)
+chroot "$root" env DEBIAN_FRONTEND=noninteractive apt-get purge -y -qq falkon >/dev/null 2>&1 || true
+chroot "$root" env DEBIAN_FRONTEND=noninteractive apt-get autoremove -y -qq --purge >/dev/null 2>&1 || true
+rm -rf "$root/home/sock/.config/falkon" "$root/etc/skel/.config/falkon"
+
+echo ">> 웹 브라우저 설치 ($BROWSER)"
+install_chrome() {
+  if [ -n "${CHROME_DEB:-}" ]; then
+    cp "$CHROME_DEB" "$root/tmp/chrome.deb"
+  else
+    chroot "$root" curl -fsSL --retry 3 -o /tmp/chrome.deb \
+      https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb || return 1
+  fi
+  chroot "$root" env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq /tmp/chrome.deb
+  local rc=$?; rm -f "$root/tmp/chrome.deb"; return $rc
+}
+install_chromium() {
+  local base=https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64 rev
+  if [ -n "${CHROMIUM_ZIP:-}" ]; then
+    cp "$CHROMIUM_ZIP" "$root/tmp/chromium.zip"
+  else
+    rev=$(chroot "$root" curl -fsSL "$base/LAST_CHANGE") || return 1
+    chroot "$root" curl -fSL --retry 3 -o /tmp/chromium.zip "$base/$rev/chrome-linux.zip" || return 1
+  fi
+  rm -rf "$root/opt/chromium" "$root/opt/chrome-linux"
+  chroot "$root" unzip -q /tmp/chromium.zip -d /opt || return 1
+  rm -f "$root/tmp/chromium.zip"
+  mv "$root/opt/chrome-linux" "$root/opt/chromium"
+  # 샌드박스 도우미는 root 소유 + setuid 여야 합니다.
+  mv "$root/opt/chromium/chrome_sandbox" "$root/opt/chromium/chrome-sandbox"
+  chown root:root "$root/opt/chromium/chrome-sandbox"; chmod 4755 "$root/opt/chromium/chrome-sandbox"
+}
+browser_name=""
+if [ "$BROWSER" = chrome ] && install_chrome; then
+  browser_name="Chrome"
+  cp "$ROOT_DIR/desktop/rootfs/usr/share/sockos/browser-preferences.json" "$root/opt/google/chrome/initial_preferences"
+elif install_chromium; then
+  [ "$BROWSER" = chrome ] && echo "!! Google Chrome을 받지 못해서 Chromium을 대신 넣었어요."
+  browser_name="Chromium"
+  cp "$ROOT_DIR/desktop/rootfs/usr/share/sockos/browser-preferences.json" "$root/opt/chromium/initial_preferences"
+else
+  echo "!! 브라우저를 받지 못했어요. 인터넷 연결을 확인하고 다시 실행하세요." >&2
+  exit 1
+fi
 
 echo ">> SockOS 설정 적용"
 cp -a "$ROOT_DIR/desktop/rootfs/." "$root/"
@@ -54,7 +98,7 @@ done
 # 앱 메뉴 정리: 쉬운 한국어 이름을 붙이고, 일반 사용자에게 필요 없는 항목은 숨깁니다.
 # 원본은 그대로 두고 /usr/local/share/applications 에 덮어쓰는 파일을 만듭니다.
 apps="$root/usr/share/applications"; local_apps="$root/usr/local/share/applications"
-mkdir -p "$local_apps"
+mkdir -p "$local_apps"; rm -f "$local_apps"/*.desktop
 rename_app() {  # rename_app 파일 "새 이름"
   [ -f "$apps/$1" ] || return 0
   awk -v name="$2" '/^\[/ { main = ($0 == "[Desktop Entry]") }
@@ -66,7 +110,6 @@ hide_app() {
   [ -f "$apps/$1" ] || return 0
   sed -e '/^NoDisplay=/d' -e 's/^\[Desktop Entry\]$/[Desktop Entry]\nNoDisplay=true/' "$apps/$1" > "$local_apps/$1"
 }
-rename_app org.kde.falkon.desktop "인터넷 (Falkon)"
 rename_app pcmanfm-qt.desktop "파일"
 rename_app org.codeberg.dnkl.foot.desktop "터미널"
 rename_app featherpad.desktop "메모장"
@@ -74,7 +117,22 @@ rename_app lximage-qt.desktop "사진 보기"
 rename_app qpdfview.desktop "PDF 보기"
 rename_app pavucontrol-qt.desktop "소리 설정"
 rename_app fcitx5-configtool.desktop "한글 입력 설정"
-for f in org.codeberg.dnkl.foot-server.desktop org.codeberg.dnkl.footclient.desktop \
+rename_app speedcrunch.desktop "계산기"
+rename_app lxqt-archiver.desktop "압축 풀기"
+rename_app mpv.desktop "동영상 플레이어"
+rename_app qps.desktop "작업 관리자"
+# 브라우저는 SockOS 실행기(sockos-browser.desktop) 하나만 보이게 합니다.
+if [ "$browser_name" = Chromium ]; then
+  sed -i -e 's/^Icon=.*/Icon=chromium/' -e 's/^StartupWMClass=.*/StartupWMClass=chromium-browser/' \
+    "$root/usr/share/applications/sockos-browser.desktop"
+  # 작업 표시줄이 Chromium 창 아이콘을 찾을 수 있게 숨은 항목을 만듭니다.
+  for f in chromium chromium-browser; do
+    printf '[Desktop Entry]\nType=Application\nName=Chromium\nExec=sockos-browser\nIcon=chromium\nNoDisplay=true\n' \
+      > "$local_apps/$f.desktop"
+  done
+fi
+sed -i "0,/^Name=.*/s//Name=인터넷 ($browser_name)/" "$root/usr/share/applications/sockos-browser.desktop"
+for f in google-chrome.desktop org.codeberg.dnkl.foot-server.desktop org.codeberg.dnkl.footclient.desktop \
          org.fcitx.Fcitx5.desktop org.fcitx.fcitx5-migrator.desktop \
          kbd-layout-viewer5.desktop pcmanfm-qt-desktop-pref.desktop; do
   hide_app "$f"

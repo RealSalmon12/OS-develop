@@ -1,0 +1,19 @@
+[Desktop Entry]
+Type=Application
+Name=인터넷
+Comment=웹 브라우저로 인터넷 사용하기
+Exec=sockos-browser %U
+Icon=google-chrome
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=google-chrome
+Actions=new-window;incognito;
+
+[Desktop Action new-window]
+Name=새 창
+Exec=sockos-browser --new-window
+
+[Desktop Action incognito]
+Name=시크릿 창
+Exec=sockos-browser --incognito

@@ -54,9 +54,21 @@ fonts-noto-cjk
 fonts-dejavu-core
 fonts-noto-color-emoji
 tzdata
-# 브라우저: Falkon (크롬과 같은 Chromium 엔진 사용)
-falkon
+# 브라우저: Google Chrome(또는 Chromium)은 build-desktop.sh가 따로 설치합니다.
+# 한글 입력을 위해 X11 모드로 띄우므로 XWayland가 필요합니다.
+xwayland
+fonts-liberation
+unzip
 qtwayland5
+# 편의 기능: 계산기, 압축 풀기, 동영상 플레이어, 작업 관리자, 영역 캡처, 클립보드, 알림
+speedcrunch
+lxqt-archiver
+lxqt-archiver-l10n
+mpv
+qps
+slurp
+wl-clipboard
+libnotify-bin
 # 소리: PipeWire (유튜브 소리 재생)
 pipewire
 pipewire-pulse

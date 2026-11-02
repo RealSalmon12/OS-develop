@@ -1,0 +1,24 @@
+#!/bin/sh
+# SockOS 웹 브라우저 실행기: Google Chrome이 있으면 Chrome, 없으면 Chromium을 엽니다.
+if command -v google-chrome-stable >/dev/null 2>&1; then
+  browser=google-chrome-stable
+elif [ -x /opt/chromium/chrome ]; then
+  browser=/opt/chromium/chrome
+else
+  notify-send "브라우저가 설치되어 있지 않아요" 2>/dev/null
+  exit 1
+fi
+
+# 한글 입력(fcitx5)이 되도록 X11 모드(XWayland)로 실행합니다.
+# 지금 쓰는 화면 관리자(labwc 0.7)는 Wayland 입력기 연결을 지원하지 않기 때문입니다.
+set -- --ozone-platform=x11 --password-store=basic --no-default-browser-check \
+       --lang=ko --start-maximized --disable-features=MediaRouter "$@"
+
+if [ -e /run/sockos-gpu ]; then
+  set -- --ignore-gpu-blocklist --enable-gpu-rasterization --enable-zero-copy "$@"
+else
+  # 그래픽 가속이 없으면 CPU로 그리는 게 더 빠르고 안정적입니다.
+  set -- --disable-gpu "$@"
+fi
+
+exec "$browser" "$@"
