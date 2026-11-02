@@ -6,7 +6,7 @@ set -euo pipefail
 source "$(dirname "$0")/../config.sh"
 
 accel=()
-[ -w /dev/kvm ] && accel=(-enable-kvm -cpu host)
+[ -w /dev/kvm ] && accel=(-accel kvm -accel tcg -cpu max)  # KVM이 실제로 안 되면 느린 방식으로 자동 전환
 [ -w /dev/kvm ] || echo "!! 경고: KVM 가속 없이 실행돼서 느려요. (sudo usermod -aG $(stat -c %G /dev/kvm 2>/dev/null || echo kvm) \$USER 후 다시 로그인)" >&2
 
 common=(-m 1G -smp 2 "${accel[@]}"
