@@ -83,4 +83,8 @@ echo ">> 디스크 이미지 만들기 ($IMAGE_SIZE)"
 img="$OUT_DIR/sockos-desktop.img"
 rm -f "$img"; truncate -s "$IMAGE_SIZE" "$img"
 mkfs.ext4 -q -L sockos -d "$root" "$img"
+# sudo로 만들었어도 일반 사용자가 make run-desktop으로 열 수 있게 소유자를 돌려줍니다.
+if [ -n "${SUDO_UID:-}" ]; then
+  chown "$SUDO_UID:$SUDO_GID" "$OUT_DIR" "$img"
+fi
 echo ">> 완료: $img"
