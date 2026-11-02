@@ -4,13 +4,28 @@
   "height": 44,
   "margin": "0 8 6 8",
   "spacing": 6,
-  "modules-left": ["custom/start", "wlr/taskbar"],
+  "modules-left": ["custom/start", "custom/web", "custom/youtube", "custom/files", "wlr/taskbar"],
   "modules-center": [],
   "modules-right": ["tray", "network", "pulseaudio", "clock", "custom/power"],
   "custom/start": {
     "format": "🧦 SockOS",
-    "tooltip-format": "앱 메뉴 (Windows 키)",
+    "tooltip-format": "앱 메뉴",
     "on-click": "fuzzel"
+  },
+  "custom/web": {
+    "format": "🌐 인터넷",
+    "tooltip": false,
+    "on-click": "falkon"
+  },
+  "custom/youtube": {
+    "format": "▶ 유튜브",
+    "tooltip": false,
+    "on-click": "falkon https://www.youtube.com"
+  },
+  "custom/files": {
+    "format": "📁 파일",
+    "tooltip": false,
+    "on-click": "pcmanfm-qt"
   },
   "wlr/taskbar": {
     "format": "{icon} {title:.18}",

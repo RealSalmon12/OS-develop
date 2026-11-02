@@ -51,6 +51,34 @@ grep -rlI '@OS_' "$root/etc" 2>/dev/null | while read -r f; do
   sed -i -e "s/@OS_NAME@/$OS_NAME/g" -e "s/@OS_VERSION@/$OS_VERSION/g" \
          -e "s/@OS_HOSTNAME@/$OS_HOSTNAME/g" "$f"
 done
+# 앱 메뉴 정리: 쉬운 한국어 이름을 붙이고, 일반 사용자에게 필요 없는 항목은 숨깁니다.
+# 원본은 그대로 두고 /usr/local/share/applications 에 덮어쓰는 파일을 만듭니다.
+apps="$root/usr/share/applications"; local_apps="$root/usr/local/share/applications"
+mkdir -p "$local_apps"
+rename_app() {  # rename_app 파일 "새 이름"
+  [ -f "$apps/$1" ] || return 0
+  awk -v name="$2" '/^\[/ { main = ($0 == "[Desktop Entry]") }
+    main && /^Name\[/ { next }
+    main && /^Name=/ { print "Name=" name; next }
+    { print }' "$apps/$1" > "$local_apps/$1"
+}
+hide_app() {
+  [ -f "$apps/$1" ] || return 0
+  sed -e '/^NoDisplay=/d' -e 's/^\[Desktop Entry\]$/[Desktop Entry]\nNoDisplay=true/' "$apps/$1" > "$local_apps/$1"
+}
+rename_app org.kde.falkon.desktop "인터넷 (Falkon)"
+rename_app pcmanfm-qt.desktop "파일"
+rename_app org.codeberg.dnkl.foot.desktop "터미널"
+rename_app featherpad.desktop "메모장"
+rename_app lximage-qt.desktop "사진 보기"
+rename_app qpdfview.desktop "PDF 보기"
+rename_app pavucontrol-qt.desktop "소리 설정"
+rename_app fcitx5-configtool.desktop "한글 입력 설정"
+for f in org.codeberg.dnkl.foot-server.desktop org.codeberg.dnkl.footclient.desktop \
+         org.fcitx.Fcitx5.desktop org.fcitx.fcitx5-migrator.desktop \
+         kbd-layout-viewer5.desktop pcmanfm-qt-desktop-pref.desktop; do
+  hide_app "$f"
+done
 # Ubuntu 배포판 정보 대신 SockOS 정보를 씁니다.
 rm -f "$root/etc/os-release" "$root/usr/lib/os-release"
 cp "$root/etc/sockos-release" "$root/usr/lib/os-release"
